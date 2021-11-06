@@ -1,0 +1,22 @@
+auth/api/node_modules
+auth/app/node_modules
+
+admin/api/node_modules
+admin/app/node_modules
+
+events/api/node_modules
+events/app/node_modules
+# Adonis directory for storing tmp files
+auth/api/tmp
+admin/api/tmp
+events/api/tmp
+
+# Environment variables, never commit this file
+auth/api/.env
+auth/app/.env
+
+admin/api/.env
+admin/app/.env
+
+events/api/.env
+events/app/.env
