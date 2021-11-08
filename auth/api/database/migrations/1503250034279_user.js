@@ -11,7 +11,8 @@ class UserSchema extends Schema {
       table.string('document', 15).notNullable().unique()
       table.string('email', 254).notNullable().unique()
       table.boolean('is_admin').defaultTo(false)
-      table.string('password', 60).notNullable()
+      table.string('password', 60).nullable()
+      table.string('hash', 60).nullable()
       table.timestamps()
     })
   }

@@ -20,6 +20,7 @@
       name: data[i].name,
       password: data[i].password,
       document: data[i].document,
-      is_admin: data[i].is_admin
+      is_admin: data[i].is_admin,
+      hash: data[i].hash
     }
   })
