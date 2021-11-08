@@ -16,4 +16,4 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.group(use('App/Routes/Events')).prefix('api/events')
+Route.group(use('App/Routes/Events'))

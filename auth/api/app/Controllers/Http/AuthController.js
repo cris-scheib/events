@@ -29,7 +29,7 @@ class AuthController {
         if (token) {
             return response.status(201).json({ token, name })
         } else {
-            return response.status(403).json({ message: 'Invalid email or password ', error })
+            return response.status(403).json({ message: 'Invalid email or password ' })
         }
     }
 
