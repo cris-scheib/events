@@ -23,9 +23,10 @@
               {{ formatDate(event.dateTimeStartRegistration) }} until
               {{ formatDate(event.dateTimeEndRegistration) }}
             </p>
-            <b-button :href="'/' + event.slug" variant="primary"
-              >Sign me up</b-button
-            >
+            <b-link href="/" class="btn btn-primary">
+              Register entries
+            </b-link>
+            <b-link href="/" class="btn btn-primary ml-3"> Sign me up </b-link>
           </b-col>
           <b-col cols="12">
             <p class="event-description mt-5" v-html="event.description"></p>
