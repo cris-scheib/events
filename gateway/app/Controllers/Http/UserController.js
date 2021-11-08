@@ -1,4 +1,5 @@
 "use strict";
+const axios = use("axios");
 
 class UserController {
   async user({ response, request }) {
