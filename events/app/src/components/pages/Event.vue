@@ -23,10 +23,12 @@
               {{ formatDate(event.dateTimeStartRegistration) }} until
               {{ formatDate(event.dateTimeEndRegistration) }}
             </p>
-            <b-link href="/" class="btn btn-primary">
+            <b-link href="/" class="btn btn-primary mr-3" v-if="user.is_admin">
               Register entries
             </b-link>
-            <b-link href="/" class="btn btn-primary ml-3"> Sign me up </b-link>
+            <b-link href="/" class="btn btn-primary" :disabled="false">
+              Sign me up
+            </b-link>
           </b-col>
           <b-col cols="12">
             <p class="event-description mt-5" v-html="event.description"></p>
@@ -52,20 +54,43 @@ export default {
     return {
       event: null,
       loaded: false,
+      user: {},
     };
   },
-  created: function () {
-    this.$api
-      .get(`/api/events/${this.$route.params.slug}`)
-      .then((res) => res.data)
-      .then((data) => {
-        this.event = data;
-        this.loaded = true;
-      });
+  async created () {
+    await this.getUser();
   },
   methods: {
     formatDate: function (date) {
       return moment(date).format("YYYY-MM-DD h:mm:ss a");
+    },
+
+    async getUser () {
+      this.$api
+        .get(`/api/user/`)
+        .then((res) => res.data)
+        .then((data) => {
+          this.user = data;
+          this.getEvent();
+        });
+    },
+    async getEvent () {
+      this.$api
+        .get(`/api/events/${this.$route.params.slug}`)
+        .then((res) => res.data)
+        .then((data) => {
+          this.event = data;
+          this.getEventUser();
+        });
+    },
+    async getEventUser () {
+      this.$api
+        .get(`/api/registration/${this.$route.params.slug}/verify-registered`)
+        .then((res) => res.data)
+        .then((data) => {
+          console.log(data);
+          this.loaded = true;
+        });
     },
   },
 };

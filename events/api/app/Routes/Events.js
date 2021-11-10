@@ -3,6 +3,6 @@
 const Route = use('Route')
 
 module.exports = () => {
-    Route.get('/', 'EventsController.getEvents')
-    Route.get('/:slug', 'EventsController.getEvent')
+    Route.get('/', 'EventsController.getEvents').middleware('auth')
+    Route.get('/:slug', 'EventsController.getEvent').middleware('auth')
 }

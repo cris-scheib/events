@@ -1,6 +1,7 @@
 "use strict";
 
 const Event = use("App/Models/Event");
+const Events = use("App/Models/Event");
 
 class EventsController {
   async getEvents({ response }) {
