@@ -14,8 +14,10 @@
 export default {
   methods: {
     logout() {
-      localStorage.clear();
-      this.$router.push("/");
+      this.$api.get(`/api/auth/logout/`).then(() => {
+        localStorage.clear();
+        this.$router.push("/");
+      });
     },
   },
 };

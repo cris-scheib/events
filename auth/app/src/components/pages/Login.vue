@@ -71,9 +71,9 @@
 </template>
 
 <script>
-import {mask} from 'vue-the-mask'
+import { mask } from "vue-the-mask";
 export default {
-  directives: {mask},
+  directives: { mask },
   props: ["hasAccount"],
   data() {
     return {
@@ -111,8 +111,7 @@ export default {
             localStorage.setItem("token", res.data.token.token);
             localStorage.setItem("refreshToken", res.data.token.refreshToken);
             localStorage.setItem("name", res.data.name);
-            localStorage.setItem("document", res.data.document);
-            this.$router.push("/dashboard");
+            window.location.href = process.env.VUE_APP_EVENTS_URL;
           } else {
             this.makeToast();
             this.loading = false;

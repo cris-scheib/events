@@ -7,6 +7,10 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
+
+    tokens() {
+        return this.hasOne('App/Models/Token')
+      }
     static boot() {
         super.boot()
 

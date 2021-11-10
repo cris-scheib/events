@@ -6,4 +6,5 @@ module.exports = () => {
     Route.post('register', 'AuthController.register')
     Route.post('login', 'AuthController.login').validator('auth/Login')
     Route.get('logout', 'AuthController.logout').middleware('auth')
+    Route.get('get-token', 'AuthController.getToken')
 }
