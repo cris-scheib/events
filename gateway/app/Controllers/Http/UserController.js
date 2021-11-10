@@ -55,6 +55,7 @@ class UserController {
         }
       )
       .then(function (resp) {
+        const data = resp.data;
         return response.status(200).json(data);
       })
       .catch(function (error) {

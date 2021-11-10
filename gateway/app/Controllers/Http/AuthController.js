@@ -2,7 +2,7 @@
 const axios = use("axios");
 
 class AuthController {
-  async register({ request, response, session }) {
+  async register({ request, response }) {
     const url = process.env.API_AUTH + "/auth/register";
     const { email, password, name, document } = request.all();
     await axios
@@ -14,7 +14,6 @@ class AuthController {
       })
       .then(function (resp) {
         const data = resp.data;
-        session.put("token", resp.data.token);
         return response.status(201).json(data);
       })
       .catch(function (error) {
@@ -24,7 +23,7 @@ class AuthController {
       });
   }
 
-  async login({ request, response, session }) {
+  async login({ request, response }) {
     const url = process.env.API_AUTH + "/auth/login";
     const { email, password } = request.all();
     await axios
@@ -34,7 +33,6 @@ class AuthController {
       })
       .then(function (resp) {
         const data = resp.data;
-        session.put("token", resp.data.token);
         return response.status(201).json(data);
       })
       .catch(function (error) {
@@ -44,23 +42,32 @@ class AuthController {
       });
   }
 
-  async logout({ response, session }) {
+  async logout({ response, request }) {
     const url = process.env.API_AUTH + "/auth/logout";
-    const token = session.get("token").token;
     await axios
-      .get(url, { headers: { Authorization: `Bearer ${token}` } })
+      .get(url, { headers: { Authorization: request.header("authorization") } })
       .then(function (resp) {
         const data = resp.data;
-        session.forget("token");
         return response.status(201).json(data);
       })
       .catch(function (error) {
         return response
-          .status(error.status)
-          .json({
-            message: "User already logged off or not authenticated",
-            error,
-          });
+          .status(403)
+          .json({ message: "Authenticated user not found" });
+      });
+  }
+  async logout({ response, request }) {
+    const url = process.env.API_AUTH + "/auth/get-token";
+    await axios
+      .get(url)
+      .then(function (resp) {
+        const data = resp.data;
+        return response.status(200).json(data);
+      })
+      .catch(function (error) {
+        return response
+          .status(500)
+          .json({ message: "Error to get the Token" });
       });
   }
 }
