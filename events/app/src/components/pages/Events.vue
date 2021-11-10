@@ -28,15 +28,18 @@
                       ></b-icon>
                       Get your certificate
                     </h5>
-                    <b-card-text
-                      >Get certificates from the events you
-                      attended</b-card-text
-                    >
+                    <b-card-text>
+                      Get certificates from the events you attended
+                    </b-card-text>
                   </b-card>
                 </b-link>
               </b-col>
               <b-col cols="12">
-                <b-link href="/change-profile" class="links">
+                {{ process }}
+                <b-link
+                  :href="this.authUrl + '/change-profile'"
+                  class="links"
+                >
                   <b-card tag="article" class="mb-2">
                     <h5>
                       <b-icon icon="person-fill" aria-hidden="true"></b-icon>
@@ -73,8 +76,9 @@
                             v-html="event.description.split('<br>')[0]"
                           ></b-card-text>
                           <div class="d-flex justify-content-end">
-                            <b-button  :href="'/'+event.slug"
-                             variant="primary">See more</b-button>
+                            <b-button :href="'/' + event.slug" variant="primary"
+                              >See more</b-button
+                            >
                           </div>
                         </b-card-body>
                       </b-col>
@@ -100,6 +104,7 @@ export default {
   data() {
     return {
       events: [],
+      authUrl: process.env.VUE_APP_AUTH_URL
     };
   },
   created: function () {
