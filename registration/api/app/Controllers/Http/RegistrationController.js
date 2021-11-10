@@ -13,7 +13,7 @@ class RegistrationController {
     } catch (error) {
       return response
         .status(500)
-        .json({ message: "Error to get the event", error });
+        .json({ message: "Error while registering", error });
     }
   }
   async checkIn({ response, params, request }) {
@@ -41,6 +41,21 @@ class RegistrationController {
       return response
         .status(200)
         .json({ message: "Entry registered with success" });
+    } catch (error) {
+      return response
+        .status(500)
+        .json({ message: "Error while registering", error });
+    }
+  }
+  async verifyRegistered({ response, params, auth }) {
+    try {
+      const event = await Event.query().where("slug", params.slug).first();
+      const user = await auth.getUser();
+      const eventUser = await EventUser.query()
+        .where("user_id", user.id)
+        .where("event_id", event.id)
+        .count();
+      return response.status(200).json(eventUser);
     } catch (error) {
       return response
         .status(500)
