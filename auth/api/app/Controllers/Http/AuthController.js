@@ -66,6 +66,25 @@ class AuthController {
     }
     return response.status(201).json({ token: null });
   }
+  async newUser({ request, response, auth }) {
+    try {
+      const user = await User.create(request.all());
+      if (user) {
+        return response
+          .status(201)
+          .json({ message: "User to create with success", user });
+      } else {
+        return response
+          .status(500)
+          .json({ message: "Error to create the user", error });
+      }
+    } catch (error) {
+      await transition.rollback();
+      return response
+        .status(500)
+        .json({ message: "Error to create the user", error });
+    }
+  }
 }
 
 module.exports = AuthController;

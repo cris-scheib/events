@@ -56,7 +56,7 @@ class AuthController {
           .json({ message: "Authenticated user not found" });
       });
   }
-  async logout({ response, request }) {
+  async getToken({ response, request }) {
     const url = process.env.API_AUTH + "/auth/get-token";
     await axios
       .get(url)
@@ -65,9 +65,26 @@ class AuthController {
         return response.status(200).json(data);
       })
       .catch(function (error) {
+        return response.status(500).json({ message: "Error to get the Token" });
+      });
+  }
+  async newUser({ request, response }) {
+    const url = process.env.API_AUTH + "/auth/new-user";
+    const { email, name, document } = request.all();
+    await axios
+      .post(url, {
+        email,
+        name,
+        document,
+      })
+      .then(function (resp) {
+        const data = resp.data;
+        return response.status(201).json(data);
+      })
+      .catch(function (error) {
         return response
           .status(500)
-          .json({ message: "Error to get the Token" });
+          .json({ message: "Error to create the user", error });
       });
   }
 }
