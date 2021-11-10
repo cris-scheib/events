@@ -19,34 +19,39 @@
           <hr class="w-100" />
           <b-col cols="12">
             <div class="d-flex justify-content-center mt-4">
-              <b-form @submit="verifyUser">
-                <b-form-group
-                  v-if="!notRegistered"
-                  id="document-label"
-                  label="Document:"
-                  label-for="document1"
-                  description="Documents already registered will be confirmed directly."
-                >
-                  <b-form-input
-                    id="document"
-                    v-model="document"
-                    type="text"
-                    v-mask="'###.###.###-##'"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                  v-if="notRegistered"
-                  id="name-label"
-                  label="Full name:"
-                  label-for="name"
-                >
-                  <b-form-input
-                    id="name"
-                    v-model="name"
-                    type="text"
-                    required
-                  ></b-form-input>
+              <div>
+                <div v-if="!notRegistered">
+                  <b-form-group
+                    id="document-label"
+                    label="Document:"
+                    label-for="document1"
+                    description="Documents already registered will be confirmed directly."
+                  >
+                    <b-form-input
+                      id="document"
+                      v-model="document"
+                      type="text"
+                      v-mask="'###.###.###-##'"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
+                </div>
+                <div>
+                  <b-form-group
+                    v-if="notRegistered"
+                    id="name-label"
+                    label="Full name:"
+                    label-for="name"
+                  >
+                    <b-form-input
+                      id="name"
+                      v-model="name"
+                      type="text"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
+                </div>
+                <div>
                   <b-form-group
                     v-if="notRegistered"
                     id="email-label"
@@ -61,11 +66,15 @@
                       required
                     ></b-form-input>
                   </b-form-group>
-                </b-form-group>
-                <b-button type="button" variant="primary" @click="verifyUser"
+                </div>
+                <b-button
+                  type="button"
+                  variant="primary"
+                  @click="validEntry"
+                  :disabled="document.length < 14"
                   >Confirm entry</b-button
                 >
-              </b-form>
+              </div>
             </div>
           </b-col>
         </b-row>
@@ -89,16 +98,16 @@ export default {
     return {
       event: null,
       loaded: false,
-      document: null,
-      email: null,
-      name: null,
+      document: "",
+      email: "",
+      name: "",
       notRegistered: false,
       user: null,
     };
   },
   created: function () {
     this.$api
-      .get(`/registration/${this.$route.params.slug}`)
+      .get(`/api/events/${this.$route.params.slug}`)
       .then((res) => res.data)
       .then((data) => {
         this.event = data;
@@ -108,6 +117,35 @@ export default {
   methods: {
     formatDate: function (date) {
       return moment(date).format("YYYY-MM-DD h:mm:ss a");
+    },
+    validEntry: function () {
+      if (this.notRegistered) {
+        console.log('create')
+        this.createUser();
+      } else {
+         console.log('verify')
+        this.verifyUser();
+      }
+    },
+    createUser: function () {
+      axios
+        .create({
+          baseURL:
+            "http://" +
+            process.env.VUE_APP_API_URL_AUTH +
+            ":" +
+            process.env.VUE_APP_API_PORT_AUTH,
+        })
+        .post("/auth/new-user", {
+          document: this.document,
+          name: this.name,
+          email: this.email,
+        })
+        .then((res) => res.data)
+        .then((data) => {
+          this.user = data.user;
+          this.confirmEntry();
+        });
     },
     verifyUser: function () {
       axios
@@ -133,7 +171,7 @@ export default {
     },
     confirmEntry: function () {
       this.$api
-        .post(`/registration/${this.$route.params.slug}`, {
+        .post(`/api/registration/${this.$route.params.slug}`, {
           user_id: this.user.id,
         })
         .then((res) => {
@@ -141,9 +179,10 @@ export default {
           this.document = "";
           this.email = "";
           this.name = "";
+          this.notRegistered = false;
         });
     },
-     makeToast(variant, message) {
+    makeToast(variant, message) {
       this.$bvToast.toast(message, {
         title: variant === "danger" ? "Error" : "Success",
         variant: variant,

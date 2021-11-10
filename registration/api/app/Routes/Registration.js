@@ -3,16 +3,11 @@
 const Route = use("Route");
 
 module.exports = () => {
+  Route.get("/:slug", "RegistrationController.register").middleware("auth");
+  Route.delete("/:slug", "RegistrationController.cancel").middleware("auth");
+  Route.post("/:slug", "RegistrationController.checkIn").middleware("auth");
   Route.get(
-    "/registration/:slug",
-    "RegistrationController.register"
-  ).middleware("auth");
-  Route.post(
-    "/registration/:slug",
-    "RegistrationController.checkIn"
-  ).middleware("auth");
-  Route.post(
-    "/registration/:slug/verify-registered",
+    "/:slug/verify-registered",
     "RegistrationController.verifyRegistered"
   ).middleware("auth");
 };

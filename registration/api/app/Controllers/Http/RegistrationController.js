@@ -6,16 +6,55 @@ const EventUser = use("App/Models/EventsUser");
 const moment = use("moment");
 
 class RegistrationController {
-  async register({ response, params }) {
+  async register({ response, params, auth }) {
     try {
       const event = await Event.query().where("slug", params.slug).first();
-      return response.status(200).json(event);
+      const user = await auth.getUser();
+      const eventUser = await EventUser.create({
+        user_id: user.id,
+        event_id: event.id,
+        dateTimeRegistration: moment().format(),
+        dateTimeEntrance: null,
+      });
+      if (eventUser) {
+        return response
+          .status(200)
+          .json({ message: "User registered with success" });
+      } else {
+        return response
+          .status(500)
+          .json({ message: "Error while registering" });
+      }
     } catch (error) {
       return response
         .status(500)
         .json({ message: "Error while registering", error });
     }
   }
+  async cancel({ response, params, auth }) {
+    try {
+      const event = await Event.query().where("slug", params.slug).first();
+      const user = await auth.getUser();
+      const eventUser = await EventUser.query()
+        .where("user_id", user.id)
+        .where("event_id", event.id)
+        .delete();
+      if (eventUser) {
+        return response
+          .status(200)
+          .json({ message: "Registration canceled with success" });
+      } else {
+        return response
+          .status(500)
+          .json({ message: "Error while canceling the registration" });
+      }
+    } catch (error) {
+      return response
+        .status(500)
+        .json({ message: "Error while canceling the registration", error });
+    }
+  }
+
   async checkIn({ response, params, request }) {
     try {
       const { user_id } = request.all();

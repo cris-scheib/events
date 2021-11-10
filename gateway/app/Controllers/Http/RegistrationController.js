@@ -13,7 +13,22 @@ class RegistrationController {
       })
       .catch(function (error) {
         return response.status(500).json({
-          message: "Error to get the events",
+          message: "Error while registering",
+          error,
+        });
+      });
+  }
+  async cancel({ response, params, request }) {
+    const url = process.env.API_REGIST + "/registration/" + params.slug;
+    await axios
+      .delete(url, { headers: { Authorization: request.header("authorization") } })
+      .then(function (resp) {
+        const data = resp.data;
+        return response.status(200).json(data);
+      })
+      .catch(function (error) {
+        return response.status(500).json({
+          message: "Error while canceling the registration",
           error,
         });
       });
@@ -50,7 +65,7 @@ class RegistrationController {
       })
       .catch(function (error) {
         return response.status(500).json({
-          message: "Error to get the events",
+          message: "Error to get the registration",
           error,
         });
       });
