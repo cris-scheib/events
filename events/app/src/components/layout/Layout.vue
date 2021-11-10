@@ -20,13 +20,14 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.clear();
-      this.$router.push("/");
+      this.$api.get(`/api/auth/logout/`).then(() => {
+        localStorage.clear();
+        window.location.href = process.env.VUE_APP_AUTH_URL;
+      });
     },
   },
   created: function () {
-    this.name = 'Cris'
-    // this.name = localStorage.getItem("name");
+    this.name = localStorage.getItem("name");
   },
 };
 </script>

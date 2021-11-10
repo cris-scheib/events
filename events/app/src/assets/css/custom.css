@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
 #app {
   height: 100vh;
   position: relative;
+}
+.ev{
+  font-family: 'Amatic SC', cursive;
+  line-height: 1.6;
 }
 
 body {
@@ -80,10 +85,6 @@ tbody tr:hover {
   background-color: #3f3f47 !important;
 }
 
-.modal-content {
-  background-color: #17171a;
-}
-
 .modal-title,
 label {
   color: #909090;
@@ -109,8 +110,32 @@ label {
   background-color: #5a6268;
   border-color: #545b62;
 }
+.modal-footer .btn.btn-secondary {
+  background-color: white;
+  width: unset;
+  color: #6a33c4;
+  border: 1px solid #6a33c4;
+}
+.modal-footer .btn.btn-secondary:hover{
+  background-color: #6930c3 !important;
+  border-color: #6930c3 !important;
+  color: white;
+}
+.modal-footer .btn.btn-primary {
+  background-color: #56cfe1;
+  width: unset;
+  color: white;
+  border: 1px solid #56cfe1;
+}
+.modal-footer .btn.btn-primary:hover{
+  background-color: #6930c3 !important;
+  border-color: #6930c3 !important;
+  color: white;
+}
 
-.modal-body,
-.table {
-  color: white !important;
+.modal-footer .btn.btn-danger {
+  background-color: #ff0000 !important;
+  border-color: #ff0000 !important;
+  width: unset;
+  color: white;
 }
