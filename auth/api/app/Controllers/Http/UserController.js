@@ -2,6 +2,7 @@
 
 const Hash = use("Hash");
 const User = use("App/Models/User");
+const moment = use("moment");
 
 class UserController {
   async user({ response, auth }) {
@@ -90,14 +91,22 @@ class UserController {
   }
   async newUser({ request, response }) {
     try {
-      const user = await User.create(request.all());
+      const { email, name, document } = request.all();
+      const hash = await Hash.make(document + " " + moment().format());
+      const user = await User.create({
+        email,
+        name,
+        document,
+        hash,
+      });
       if (user) {
-        return response.status(201).json({ user });
+        return response
+          .status(201)
+          .json({ message: "User to create with success", user });
       } else {
-        await transition.rollback();
         return response
           .status(500)
-          .json({ message: "Error to create the user", error });
+          .json({ message: "Error to create the user" });
       }
     } catch (error) {
       await transition.rollback();
