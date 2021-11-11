@@ -9,20 +9,12 @@ import axios from "axios";
 require("./assets/css/custom.css");
 
 let token = localStorage.getItem("token");
-if (!token) {
-  axios
-    .get(
-      "http://" +
-        process.env.VUE_APP_API_URL +
-        ":" +
-        process.env.VUE_APP_API_PORT +
-        "/api/auth/get-token"
-    )
-    .then((res) => {
-      localStorage.setItem("token", res.data.token);
-      instanceApi(res.data.token);
-      instanceBoot();
-    });
+if (!token || token == null || token == "null") {
+  axios.get(process.env.VUE_APP_API_URL + "/api/auth/get-token").then((res) => {
+    localStorage.setItem("token", res.data.token);
+    instanceApi(res.data.token);
+    instanceBoot();
+  });
 } else {
   instanceApi(token);
   instanceBoot();
@@ -30,11 +22,10 @@ if (!token) {
 
 function instanceApi(token = null) {
   const api = axios.create({
-    baseURL:
-      "http://" +
-      process.env.VUE_APP_API_URL +
-      ":" +
-      process.env.VUE_APP_API_PORT,
+    baseURL:process.env.VUE_APP_API_URL,
+  });
+  const apiAuth = axios.create({
+    baseURL:process.env.VUE_APP_API_URL,
   });
   api.interceptors.request.use(
     (config) => {
@@ -59,6 +50,7 @@ function instanceApi(token = null) {
     }
   );
   Vue.api = Vue.prototype.$api = api;
+  Vue.apiAuth = Vue.prototype.$apiAuth = apiAuth;
 }
 
 function instanceBoot() {

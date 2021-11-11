@@ -1,7 +1,7 @@
 <template>
   <layout>
     <b-container fluid>
-      <b-row class="section">
+      <b-row class="section" v-if="loaded">
         <b-col cols="12" lg="3">
           <aside>
             <b-row>
@@ -35,11 +35,7 @@
                 </b-link>
               </b-col>
               <b-col cols="12">
-                {{ process }}
-                <b-link
-                  :href="this.authUrl + '/change-profile'"
-                  class="links"
-                >
+                <b-link :href="authUrl + '/change-profile'" class="links">
                   <b-card tag="article" class="mb-2">
                     <h5>
                       <b-icon icon="person-fill" aria-hidden="true"></b-icon>
@@ -104,7 +100,8 @@ export default {
   data() {
     return {
       events: [],
-      authUrl: process.env.VUE_APP_AUTH_URL
+      authUrl: process.env.VUE_APP_AUTH_URL,
+      loaded: false,
     };
   },
   created: function () {
@@ -113,6 +110,7 @@ export default {
       .then((res) => res.data)
       .then((data) => {
         this.events = data;
+        this.loaded = true;
       });
   },
 };

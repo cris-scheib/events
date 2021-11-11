@@ -2,7 +2,8 @@
   <div>
     <main>
       <header>
-        <p class="m-0">{{ this.name }}</p>
+        <h5 class="evey">EVEY</h5>
+        <h6 class="m-0">{{ name }}</h6>
         <b-button @click="logout()" class="btn-logout"> Logout </b-button>
       </header>
       <slot />
@@ -27,6 +28,13 @@ export default {
     },
   },
   created: function () {
+    if (!localStorage.getItem("name")) {
+      this.$api.get(`/api/user/`).then((res) => {
+        localStorage.setItem("name", res.data.name);
+        localStorage.setItem("document", res.data.document);
+        localStorage.setItem("email", res.data.email);
+      });
+    }
     this.name = localStorage.getItem("name");
   },
 };

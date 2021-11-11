@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap');
+
 #app {
   height: 100vh;
   position: relative;
+}
+
+.evey {
+  font-family: 'Bai Jamjuree', sans-serif;
+  margin-right: auto;
+  font-size: 2em;
+  margin-bottom: 0;
+  color: white;
 }
 
 body {

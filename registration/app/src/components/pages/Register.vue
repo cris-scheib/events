@@ -86,7 +86,6 @@
 <script>
 import Layout from "../layout/Layout.vue";
 import moment from "moment";
-import axios from "axios";
 import { mask } from "vue-the-mask";
 
 export default {
@@ -120,23 +119,14 @@ export default {
     },
     validEntry: function () {
       if (this.notRegistered) {
-        console.log('create')
         this.createUser();
       } else {
-         console.log('verify')
         this.verifyUser();
       }
     },
     createUser: function () {
-      axios
-        .create({
-          baseURL:
-            "http://" +
-            process.env.VUE_APP_API_URL_AUTH +
-            ":" +
-            process.env.VUE_APP_API_PORT_AUTH,
-        })
-        .post("/auth/new-user", {
+      this.$apiAuth
+        .post(process.env.VUE_APP_API_URL + "/api/user/new-user", {
           document: this.document,
           name: this.name,
           email: this.email,
@@ -148,15 +138,8 @@ export default {
         });
     },
     verifyUser: function () {
-      axios
-        .create({
-          baseURL:
-            "http://" +
-            process.env.VUE_APP_API_URL_AUTH +
-            ":" +
-            process.env.VUE_APP_API_PORT_AUTH,
-        })
-        .post("/user/verify-user", {
+      this.$apiAuth
+        .post(process.env.VUE_APP_API_URL + "/api/user/verify-user", {
           document: this.document,
         })
         .then((res) => res.data)

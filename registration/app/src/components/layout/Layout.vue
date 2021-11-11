@@ -2,7 +2,8 @@
   <div>
     <main>
       <header>
-        <p class="m-0">{{ this.name }}</p>
+        <h5 class="evey">EVEY</h5>
+        <h6 class="m-0">{{ name }}</h6>
         <b-button @click="logout()" class="btn-logout"> Logout </b-button>
       </header>
       <slot />
@@ -20,13 +21,21 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.clear();
-      this.$router.push("/");
+      this.$api.get(`/api/auth/logout/`).then(() => {
+        localStorage.clear();
+        window.location.href = process.env.VUE_APP_AUTH_URL;
+      });
     },
   },
   created: function () {
-    this.name = 'Cris'
-    // this.name = localStorage.getItem("name");
+    if (!localStorage.getItem("name")) {
+      this.$api.get(`/api/user/`).then((res) => {
+        localStorage.setItem("name", res.data.name);
+        localStorage.setItem("document", res.data.document);
+        localStorage.setItem("email", res.data.email);
+      });
+    }
+    this.name = localStorage.getItem("name");
   },
 };
 </script>

@@ -1,16 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap');
+
 #app {
   height: 100vh;
   position: relative;
 }
 
+.evey {
+  font-family: 'Bai Jamjuree', sans-serif;
+  margin-right: auto;
+  font-size: 2em;
+  margin-bottom: 0;
+  color: white;
+}
 body {
   margin: 0;
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-family: "Zen Kaku Gothic Antique", sans-serif;
 }
 
-.custom-control-label{
-    cursor: pointer;
+.custom-control-label {
+  cursor: pointer;
 }
 .custom-control-label::before {
   border: #6930c3 solid 2px;

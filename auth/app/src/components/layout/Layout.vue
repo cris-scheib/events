@@ -2,6 +2,8 @@
   <div>
     <main>
       <header>
+        <h5 class="evey">EVEY</h5>
+        <h6 class="m-0">{{ name }}</h6>
         <b-button @click="logout()" class="btn-logout"> Logout </b-button>
       </header>
       <slot />
@@ -12,6 +14,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      name: "",
+    };
+  },
   methods: {
     logout() {
       this.$api.get(`/api/auth/logout/`).then(() => {
@@ -19,6 +26,9 @@ export default {
         this.$router.push("/");
       });
     },
+  },
+  created() {
+    this.name = localStorage.getItem("name");
   },
 };
 </script>
