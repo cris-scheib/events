@@ -41,6 +41,29 @@ class AuthController {
         .json({ message: "Invalid email or password " });
     }
   }
+  async createPassword({ request, response, auth }) {
+    const { password, hash } = request.all();
+    let user = await User.query().where("hash", hash).first();
+    if (user) {
+      user.password = password;
+      const result = await user.save();
+      const token = await auth.attempt(user.email, password);
+      const name = user.name
+      if (result && token) {
+        await Cache.forever("token", token);
+        return response.status(201).json({ token, name });
+      } else {
+        return response
+          .status(403)
+          .json({ message: "Invalid token" });
+      }
+    }else{
+      return response
+      .status(403)
+      .json({ message: "Invalid token" });
+    }
+  
+  }
 
   async logout({ response, auth }) {
     try {

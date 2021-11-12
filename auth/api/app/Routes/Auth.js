@@ -7,4 +7,5 @@ module.exports = () => {
   Route.post("login", "AuthController.login").validator("auth/Login");
   Route.get("logout", "AuthController.logout").middleware("auth");
   Route.get("get-token", "AuthController.getToken");
+  Route.post("create-password", "AuthController.createPassword");
 };

@@ -41,6 +41,23 @@ class AuthController {
           .json({ message: "Invalid email or password ", error });
       });
   }
+  async createPassword({ request, response }) {
+    const url = process.env.API_AUTH + "/auth/create-password";
+    const { password, hash } = request.all();
+    await axios
+      .post(url, {
+        password, hash
+      })
+      .then(function (resp) {
+        const data = resp.data;
+        return response.status(201).json(data);
+      })
+      .catch(function (error) {
+        return response
+          .status(403)
+          .json({ message: "Invalid token", error });
+      });
+  }
 
   async logout({ response, request }) {
     const url = process.env.API_AUTH + "/auth/logout";

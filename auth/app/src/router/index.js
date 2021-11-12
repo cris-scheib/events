@@ -38,6 +38,14 @@ let router = new Router({
         guest: false,
       },
     },
+    {
+      path: "/create-password/:hash",
+      name: "create-password",
+      component: require("@/components/pages/CreatePassword").default,
+      meta: {
+        guest: true,
+      },
+    },
   ],
 });
 

@@ -2,7 +2,7 @@
   <b-container fluid class="form">
     <b-row class="h-100">
       <b-col lg="5" cols="8" class="m-auto login-content">
-        <b-form>
+        <b-form v-if="!hasHash">
           <header>
             <h3 class="title">
               {{ account ? "Login with your account" : "Have an account?" }}
@@ -28,7 +28,7 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <b-form-group>
+            <b-form-group v-if="!hasPassword">
               <b-form-input
                 id="email"
                 v-model="email"
@@ -38,7 +38,7 @@
               ></b-form-input>
             </b-form-group>
 
-            <b-form-group>
+            <b-form-group v-if="!account || hasPassword">
               <b-form-input
                 id="password"
                 v-model="password"
@@ -65,6 +65,23 @@
             >
           </footer>
         </b-form>
+        <div v-else>
+          <h4>
+            An email was sent to your account where you will have the
+            instructions to complete your registration.
+          </h4>
+          <b-button
+            type="button"
+            class="mt-4"
+            variant="primary"
+            @click="
+              hasHash = false;
+              hasPassword = false;
+            "
+          >
+            Ok
+          </b-button>
+        </div>
       </b-col>
     </b-row>
   </b-container>
@@ -83,6 +100,8 @@ export default {
       password: "",
       account: this.hasAccount,
       loading: false,
+      hasPassword: false,
+      hasHash: false,
     };
   },
   methods: {
@@ -94,29 +113,46 @@ export default {
       });
     },
     check() {
-      this.loading = true;
-      let { name, email, password, document } = this;
-      this.$api
-        .post(`/api/auth/${this.account ? "login" : "register"}`, {
-          name,
-          email,
-          document,
-          password,
-        })
-        .catch((error) => {
-          console.log("error", error);
-        })
-        .then((res) => {
-          if (res != undefined) {
-            localStorage.setItem("token", res.data.token.token);
-            localStorage.setItem("refreshToken", res.data.token.refreshToken);
-            localStorage.setItem("name", res.data.name);
-            window.location.href = process.env.VUE_APP_EVENTS_URL;
-          } else {
-            this.makeToast();
-            this.loading = false;
-          }
-        });
+      if (this.account && !this.hasPassword) {
+        let { email } = this;
+        this.$api
+          .post(`/api/user/verify-hash/`, { email })
+          .catch((error) => {
+            console.log("error", error);
+          })
+          .then((res) => {
+            this.hasPassword = !res.data.hasHash;
+            this.hasHash = res.data.hasHash;
+            if (this.hasHash) {
+              const user_id = res.data.user_id;
+              this.$api.post(`/api/mailer/login`, { user_id });
+            }
+          });
+      } else {
+        this.loading = true;
+        let { name, email, password, document } = this;
+        this.$api
+          .post(`/api/auth/${this.account ? "login" : "register"}`, {
+            name,
+            email,
+            document,
+            password,
+          })
+          .catch((error) => {
+            console.log("error", error);
+          })
+          .then((res) => {
+            if (res != undefined) {
+              localStorage.setItem("token", res.data.token.token);
+              localStorage.setItem("refreshToken", res.data.token.refreshToken);
+              localStorage.setItem("name", res.data.name);
+              window.location.href = process.env.VUE_APP_EVENTS_URL;
+            } else {
+              this.makeToast();
+              this.loading = false;
+            }
+          });
+      }
     },
   },
 };
