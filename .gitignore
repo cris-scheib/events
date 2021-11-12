@@ -20,6 +20,10 @@ gateway/node_modules
 gateway/tmp
 gateway/.env
 
+mailer/node_modules
+mailer/tmp
+mailer/.env
+
 registration/api/node_modules
 registration/app/node_modules
 registration/api/tmp
