@@ -27,6 +27,17 @@ function instanceApi(token = null) {
   const apiAuth = axios.create({
     baseURL:process.env.VUE_APP_API_URL,
   });
+  apiAuth.interceptors.request.use(
+    (config) => {
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   api.interceptors.request.use(
     (config) => {
       if (token) {

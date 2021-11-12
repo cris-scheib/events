@@ -91,7 +91,8 @@ export default {
       user: {},
       registered: false,
       registeredTitle: "You are already registered",
-      registerUrl: process.env.VUE_APP_REGIST_URL + '/' + this.$route.params.slug
+      registerUrl:
+        process.env.VUE_APP_REGIST_URL + "/" + this.$route.params.slug,
     };
   },
   async created() {
@@ -107,6 +108,7 @@ export default {
         .then(() => {
           this.makeToast("success", "User registered with success");
           this.registered = true;
+          this.$api.get(`/api/mailer/confirm-register/${this.$route.params.slug}`);
         })
         .catch((error) => {
           this.makeToast("danger", "Error to confirm the registration");
@@ -117,7 +119,10 @@ export default {
       this.$api
         .delete(`/api/registration/${this.$route.params.slug}`)
         .then(() => {
-          this.makeToast("success", "Your registration has been canceled successfully");
+          this.makeToast(
+            "success",
+            "Your registration has been canceled successfully"
+          );
           this.registered = false;
         })
         .catch((error) => {
