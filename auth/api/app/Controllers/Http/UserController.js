@@ -89,10 +89,24 @@ class UserController {
         .json({ message: "Error to find the user", error });
     }
   }
+  async verifyHash({ request, response }) {
+    try {
+      const { email } = request.all();
+      const user = await User.query().where("email", email).first();
+      if(user === null){
+        return response.status(200).json({ hasHash: false });
+      }
+      return response.status(200).json({ hasHash: user.hash !== null, user_id:user.id });
+    } catch (error) {
+      return response
+        .status(500)
+        .json({ message: "Error to find the user", error });
+    }
+  }
   async newUser({ request, response }) {
     try {
       const { email, name, document } = request.all();
-      const hash = await Hash.make(document + " " + moment().format());
+      const hash =  btoa(document + " " + moment().format())
       const user = await User.create({
         email,
         name,

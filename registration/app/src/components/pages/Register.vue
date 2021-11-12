@@ -159,6 +159,10 @@ export default {
         })
         .then((res) => {
           this.makeToast("success", res.data.message);
+          this.$api.post(
+            `/api/mailer/confirm-entry/${this.$route.params.slug}`,
+            { user_id: this.user.id }
+          );
           this.document = "";
           this.email = "";
           this.name = "";

@@ -80,15 +80,36 @@ class UserController {
           .json({ message: "Error to find the user", error });
       });
   }
+  async verifyHash({ request, response }) {
+    const url = process.env.API_AUTH + "/user/verify-hash";
+    const { email } = request.all();
+    await axios
+      .post(url, { email })
+      .then(function (resp) {
+        const data = resp.data;
+        return response.status(201).json(data);
+      })
+      .catch(function (error) {
+        return response
+          .status(500)
+          .json({ message: "Error to find the user", error });
+      });
+  }
   async newUser({ request, response }) {
     const url = process.env.API_AUTH + "/user/new-user";
     const { email, name, document } = request.all();
     await axios
-      .post(url, {
-        email,
-        name,
-        document,
-      })
+      .post(
+        url,
+        {
+          email,
+          name,
+          document,
+        },
+        {
+          headers: { Authorization: request.header("authorization") },
+        }
+      )
       .then(function (resp) {
         const data = resp.data;
         return response.status(201).json(data);
