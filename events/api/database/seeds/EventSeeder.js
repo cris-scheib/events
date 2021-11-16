@@ -14,7 +14,8 @@ class EventSeeder {
         title: "Tribute to Queen",
         local: "St. Patrick's Museum",
         image: "https://efemeridesdoefemello.files.wordpress.com/2016/08/9ago16a.jpg",
-        slug: "tribute-to-queen"
+        slug: "tribute-to-queen",
+        template: "black"
       },
       {
         dateTimeEvent: "2021-12-10 21:00:00",
@@ -26,7 +27,7 @@ class EventSeeder {
         title: "Tribute to Kiss",
         local: "Legacy Hall",
         image: "https://townsquare.media/site/295/files/2018/04/kiss.jpg?w=980&q=75",
-        slug: "tribute-to-kiss"
+        template: "blue"
       },
       {
         dateTimeEvent: "2021-12-01 22:00:00",
@@ -39,7 +40,8 @@ class EventSeeder {
         title: "Led Zeppelin in Celebration Day",
         local: "Buenos Aires",
         image: "https://ligadoamusica.com.br/wp-content/uploads/2020/05/ledzeppelin_celebrationday_rosshalfin_20121124.jpg",
-        slug: "led-zeppelin-in-celebration-day"
+        slug: "led-zeppelin-in-celebration-day",
+        template: "black"
       },
     ]);
   }

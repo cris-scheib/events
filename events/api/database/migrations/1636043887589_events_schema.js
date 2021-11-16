@@ -15,6 +15,7 @@ class EventsSchema extends Schema {
       table.string('local')
       table.string('image')
       table.string('slug')
+      table.string('template')
       table.timestamps()
     })
   }
