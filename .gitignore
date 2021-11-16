@@ -29,3 +29,12 @@ registration/app/node_modules
 registration/api/tmp
 registration/api/.env
 registration/app/.env
+
+printer/app/node_modules
+printer/app/.env
+
+offline/api/node_modules
+offline/app/node_modules
+offline/api/tmp
+offline/api/.env
+offline/app/.env
