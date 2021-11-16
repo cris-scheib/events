@@ -1,0 +1,146 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap');
+
+#app {
+  height: 100vh;
+  position: relative;
+}
+
+.evey {
+  font-family: 'Bai Jamjuree', sans-serif;
+  margin-right: auto;
+  font-size: 2em;
+  margin-bottom: 0;
+  color: white;
+}
+
+body {
+  margin: 0;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  line-height: 1.6;
+}
+
+.custom-control-label{
+    cursor: pointer;
+}
+.custom-control-label::before {
+  border: #6930c3 solid 2px;
+}
+
+.custom-control-input:checked + .custom-control-label::after {
+  background-color: #6930c3;
+  border-radius: 0.25rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.form-control {
+  background-color: #ffffff3d;
+  border-radius: 0.5rem;
+  color: #909090;
+}
+
+.form-control::placeholder {
+  color: #909090;
+}
+
+.form-control:focus {
+  background-color: #ffffff3d;
+  outline: unset;
+  box-shadow: unset;
+  color: #909090;
+}
+
+.btn {
+  background-color: #6930c3;
+  color: white;
+  border: unset;
+  border-radius: 0.5rem;
+  padding: 0.5rem 2rem;
+  width: 100%;
+}
+.btn-edit {
+  padding: 0.3rem 1.9rem 0.3rem 1.5rem;
+}
+
+.btn:focus,
+.btn:hover,
+.btn:active {
+  color: #fff;
+  background-color: #56cfe1 !important;
+  border-color: #56cfe1 !important;
+  box-shadow: unset;
+}
+
+.custom-checkbox {
+  padding-left: 2rem;
+  color: #6930c3;
+}
+
+tbody tr:hover {
+  color: #6930c3 !important;
+  background-color: #3f3f47 !important;
+}
+
+.modal-title,
+label {
+  color: #909090;
+}
+
+.custom-select {
+  background-color: #ffffff3d;
+  border: unset !important;
+  border-radius: 0.5rem;
+  color: white;
+}
+
+.custom-select option {
+  background-color: #17171a;
+}
+
+.modal-footer .btn {
+  width: unset;
+}
+
+.modal-footer .btn:hover {
+  color: #fff;
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+.modal-footer .btn.btn-secondary {
+  background-color: white;
+  width: unset;
+  color: #6a33c4;
+  border: 1px solid #6a33c4;
+}
+.modal-footer .btn.btn-secondary:hover{
+  background-color: #6930c3 !important;
+  border-color: #6930c3 !important;
+  color: white;
+}
+.modal-footer .btn.btn-primary {
+  background-color: #56cfe1;
+  width: unset;
+  color: white;
+  border: 1px solid #56cfe1;
+}
+.modal-footer .btn.btn-primary:hover{
+  background-color: #6930c3 !important;
+  border-color: #6930c3 !important;
+  color: white;
+}
+
+.modal-footer .btn.btn-danger {
+  background-color: #ff0000 !important;
+  border-color: #ff0000 !important;
+  width: unset;
+  color: white;
+} */
