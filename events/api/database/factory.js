@@ -24,5 +24,6 @@
       local: data[i].local,
       image: data[i].image,
       slug: data[i].slug,
+      template: data[i].template,
     }
   })

@@ -6,7 +6,7 @@
           <aside>
             <b-row>
               <b-col cols="12">
-                <b-link href="#foo" class="links">
+                <b-link href="/my-events" class="links">
                   <b-card tag="article" class="mb-2">
                     <h5>
                       <b-icon icon="calendar-check" aria-hidden="true"></b-icon>
@@ -19,7 +19,7 @@
                 </b-link>
               </b-col>
               <b-col cols="12">
-                <b-link href="#foo" class="links">
+                <b-link href="/my-certificates" class="links">
                   <b-card tag="article" class="mb-2">
                     <h5>
                       <b-icon
