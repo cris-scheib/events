@@ -30,8 +30,8 @@ registration/api/tmp
 registration/api/.env
 registration/app/.env
 
-printer/app/node_modules
-printer/app/.env
+printer/node_modules
+printer/.env
 
 offline/api/node_modules
 offline/app/node_modules
