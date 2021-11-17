@@ -30,6 +30,7 @@
               @mouseover="registeredTitle = 'Cancel your register'"
               @mouseleave="registeredTitle = 'You are already registered'"
               @click="modalCancel()"
+              :disabled="!canCancel()"
             >
               {{ registeredTitle }}
             </b-button>
@@ -99,6 +100,9 @@ export default {
     await this.getUser();
   },
   methods: {
+    canCancel: function () {
+      return moment().diff(this.event.dateTimeEvent, "days") < -200;
+    },
     formatDate: function (date) {
       return moment(date).format("YYYY-MM-DD h:mm:ss a");
     },
@@ -108,7 +112,9 @@ export default {
         .then(() => {
           this.makeToast("success", "User registered with success");
           this.registered = true;
-          this.$api.get(`/api/mailer/confirm-register/${this.$route.params.slug}`);
+          this.$api.get(
+            `/api/mailer/confirm-register/${this.$route.params.slug}`
+          );
         })
         .catch((error) => {
           this.makeToast("danger", "Error to confirm the registration");
@@ -124,6 +130,9 @@ export default {
             "Your registration has been canceled successfully"
           );
           this.registered = false;
+          this.$api.get(
+            `/api/mailer/cancel-register/${this.$route.params.slug}`
+          );
         })
         .catch((error) => {
           this.makeToast("danger", "Error to cancel the registration");
@@ -204,7 +213,7 @@ main {
   border-color: #6930c3 !important;
   color: white;
 }
-.registered:hover {
+.registered:not(:disabled):hover {
   background-color: #ff0000 !important;
   border-color: #ff0000 !important;
 }

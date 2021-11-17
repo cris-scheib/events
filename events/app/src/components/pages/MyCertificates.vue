@@ -89,7 +89,7 @@
                           <div class="d-flex justify-content-end">
                             <b-link
                               target="_blank"
-                              :href="printUrl + event.slug"
+                              :href="printUrl + '/' + event.slug"
                               class="btn btn-secondary"
                             >
                               Get certificate
