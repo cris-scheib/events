@@ -55,7 +55,7 @@ export default {
   },
   created: function () {
     this.$api
-      .get(`/api/events/`)
+      .get(`/events/`)
       .then((res) => res.data)
       .then((data) => {
         this.events = data;

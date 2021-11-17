@@ -9,24 +9,8 @@ import axios from "axios";
 require("./assets/css/custom.css");
 
 let token = localStorage.getItem("token");
-if (!token) {
-  axios
-    .get(
-      "http://" +
-        process.env.VUE_APP_API_URL +
-        ":" +
-        process.env.VUE_APP_API_PORT +
-        "/api/auth/get-token"
-    )
-    .then((res) => {
-      localStorage.setItem("token", res.data.token);
-      instanceApi(res.data.token);
-      instanceBoot();
-    });
-} else {
-  instanceApi(token);
-  instanceBoot();
-}
+instanceApi(token);
+instanceBoot();
 
 function instanceApi(token = null) {
   const api = axios.create({

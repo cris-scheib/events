@@ -18,3 +18,6 @@ const Route = use('Route')
 
 Route.group(use('App/Routes/Auth')).prefix('/auth')
 Route.group(use('App/Routes/User')).prefix('/user')
+Route.group(use('App/Routes/Events')).prefix('/events')
+Route.group(use('App/Routes/Registration')).prefix('/registration')
+Route.group(use('App/Routes/Synchronization')).prefix('/sync')

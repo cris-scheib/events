@@ -106,7 +106,7 @@ export default {
   },
   created: function () {
     this.$api
-      .get(`/api/events/${this.$route.params.slug}`)
+      .get(`/events/${this.$route.params.slug}`)
       .then((res) => res.data)
       .then((data) => {
         this.event = data;
@@ -125,8 +125,8 @@ export default {
       }
     },
     createUser: function () {
-      this.$apiAuth
-        .post(process.env.VUE_APP_API_URL + "/api/user/new-user", {
+      this.$api
+        .post("/user/new-user", {
           document: this.document,
           name: this.name,
           email: this.email,
@@ -138,8 +138,8 @@ export default {
         });
     },
     verifyUser: function () {
-      this.$apiAuth
-        .post(process.env.VUE_APP_API_URL + "/api/user/verify-user", {
+      this.$api
+        .post("/user/verify-user", {
           document: this.document,
         })
         .then((res) => res.data)
@@ -154,15 +154,11 @@ export default {
     },
     confirmEntry: function () {
       this.$api
-        .post(`/api/registration/${this.$route.params.slug}`, {
+        .post(`/registration/${this.$route.params.slug}`, {
           user_id: this.user.id,
         })
         .then((res) => {
           this.makeToast("success", res.data.message);
-          this.$api.post(
-            `/api/mailer/confirm-entry/${this.$route.params.slug}`,
-            { user_id: this.user.id }
-          );
           this.document = "";
           this.email = "";
           this.name = "";

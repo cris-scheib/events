@@ -29,6 +29,7 @@
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
     "adonis-cache": "^0.3.4",
+    "btoa": "^1.2.1",
     "pg": "^8.5.1",
     "vue-the-mask": "^0.11.1"
   },
