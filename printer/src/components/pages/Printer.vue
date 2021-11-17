@@ -78,6 +78,10 @@ export default {
         .get(`/api/registration/${this.$route.params.slug}/verify-registered`)
         .then((res) => {
           this.registered = res.data[0].count > 0;
+          if(this.registered){
+            console.log('ok')
+             this.$api.get(`/api/mailer/certificate/${this.$route.params.slug}`);
+          }
           this.loaded = true;
         });
     },
@@ -100,5 +104,20 @@ export default {
   font-family: "Zen Kaku Gothic Antique";
   color: white;
   font-weight: 700;
+}
+.btn {
+  background-color: #6930c3;
+  color: white;
+  border: unset;
+  border-radius: 0.5rem;
+  padding: 0.5rem 2rem;
+}
+.btn:focus,
+.btn:hover,
+.btn:active {
+  color: #fff;
+  background-color: #56cfe1 !important;
+  border-color: #56cfe1 !important;
+  box-shadow: unset;
 }
 </style>

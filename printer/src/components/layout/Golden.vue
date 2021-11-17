@@ -19,6 +19,7 @@
           {{ this.formatDate(this.event.dateTimeEvent) }}
         </p>
         <p id="date">{{ this.now() }}</p>
+        <p id="id">Nº {{ this.event.id }}{{ this.user.id }}</p>
       </div>
     </main>
   </div>
@@ -51,7 +52,8 @@ main {
 }
 #name,
 #info,
-#date {
+#date,
+#id {
   position: absolute;
 
   font-family: "Zen Kaku Gothic Antique";
@@ -74,7 +76,13 @@ main {
   color: #6c757d;
   width: 23em;
 }
-
+.black #id {
+  font-size: 1.2em;
+  top: 8em;
+  left: 7em;
+  color: #f4d889;
+  font-weight: bold;
+}
 .blue #name {
   top: 9.5em;
   left: 15.5em;
@@ -92,5 +100,11 @@ main {
   right: 18.1em;
   color: #c9a04c;
   width: 23em;
+}
+.blue #id {
+  top: 27.3em;
+  right: 13.1em;
+  color: #393b4f;
+  font-weight: bold;
 }
 </style>
