@@ -14,7 +14,7 @@
       <div>
         <b-row>
           <b-col cols="12" md="6">
-            <b-link href="#foo" class="me-link">
+            <b-link :href="eventUrl + '/my-events'" class="me-link">
               <b-card tag="article" class="mb-2">
                 <h5>
                   <b-icon icon="calendar-check" aria-hidden="true"></b-icon>
@@ -24,7 +24,7 @@
             </b-link>
           </b-col>
           <b-col cols="12" md="6">
-            <b-link href="#foo" class="me-link">
+            <b-link :href="eventUrl + '/my-certificates'" class="me-link">
               <b-card tag="article" class="mb-2">
                 <h5><b-icon icon="file-earmark-richtext" aria-hidden="true"></b-icon>
                 Get your certificate</h5>
@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       name: "",
+      eventUrl: process.env.VUE_APP_EVENTS_URL
     };
   },
   created: function () {

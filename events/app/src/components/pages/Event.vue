@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     canCancel: function () {
-      return moment().diff(this.event.dateTimeEvent, "days") < -200;
+      return moment().diff(this.event.dateTimeEvent, "days") < -2;
     },
     formatDate: function (date) {
       return moment(date).format("YYYY-MM-DD h:mm:ss a");

@@ -27,6 +27,7 @@ class EventSeeder {
         title: "Tribute to Kiss",
         local: "Legacy Hall",
         image: "https://townsquare.media/site/295/files/2018/04/kiss.jpg?w=980&q=75",
+        slug: "tribute-to-kiss",
         template: "blue"
       },
       {

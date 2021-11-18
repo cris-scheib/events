@@ -3,6 +3,7 @@
 const Hash = use("Hash");
 const User = use("App/Models/User");
 const moment = use("moment");
+const btoa = require('btoa');
 
 class UserController {
   async user({ response, auth }) {
@@ -113,6 +114,7 @@ class UserController {
         document,
         hash,
       });
+      console.log(user)
       if (user) {
         return response
           .status(201)
@@ -123,7 +125,6 @@ class UserController {
           .json({ message: "Error to create the user" });
       }
     } catch (error) {
-      await transition.rollback();
       return response
         .status(500)
         .json({ message: "Error to create the user", error });
