@@ -15,7 +15,7 @@ class MailerController {
       name: user.name,
       content: {
         name: user.name,
-        url: Env.get("MAIL_FROM_NAME") + "/create-password/" + user.hash,
+        url: Env.get("APP_AUTH_URL") + "/create-password/" + user.hash,
       },
       subject: "Confirm the login",
       template: "emails.login",
