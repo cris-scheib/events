@@ -10,6 +10,7 @@ class SynchronizationController {
   async sync({ response }) {
     if (this.verifyConnection()) {
       let newUser = null;
+      let newUserOnline = null;
       const transition = await Database.beginTransaction();
       try {
         const users = await User.all();
@@ -59,6 +60,47 @@ class SynchronizationController {
             }
           }
         }
+        const onlineUsers = await Database.connection("online")
+          .select("*")
+          .from("users");
+        for (let onlineUser of onlineUsers) {
+          let exists = await User.query()
+            .where("document", onlineUser.document)
+            .count();
+          if (exists[0].count == 0) {
+            newUserOnline = await User.create({
+              name: onlineUser.name,
+              document: onlineUser.document,
+              email: onlineUser.email,
+              password: onlineUser.password,
+              hash: onlineUser.hash,
+              is_admin: onlineUser.is_admin,
+            });
+          }
+          const onlineEventsUser = await Database.connection("online")
+            .select("*")
+            .where("user_id", onlineUser.id)
+            .from("events_users");
+          for (let eventUserOnline of onlineEventsUser) {
+            let exists = await EventUser.query()
+              .where("user_id", eventUserOnline.user_id)
+              .where("event_id", eventUserOnline.event_id)
+              .count();
+            if (exists[0].count == 0) {
+              if (newUserOnline !== null) {
+                await EventUser.create({
+                  user_id: newUserOnline.id,
+                  event_id: eventUserOnline.event_id,
+                });
+              } else {
+                await EventUser.create({
+                  user_id: eventUserOnline.user_id,
+                  event_id: eventUserOnline.event_id,
+                });
+              }
+            }
+          }
+        }
         await transition.commit();
         Database.close(["online"]);
         return response
@@ -66,7 +108,6 @@ class SynchronizationController {
           .json({ message: "Data successfully synchronized" });
       } catch (error) {
         await transition.rollback();
-        console.log(error);
         return response
           .status(500)
           .json({ message: "Error while synchronizing the users", error });

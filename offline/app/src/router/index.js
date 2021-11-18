@@ -7,7 +7,7 @@ let router = new Router({
   mode: "history",
   routes: [
     {
-      path: "/login",
+      path: "/",
       name: "auth",
       component: require("@/components/pages/Login").default,
       meta: {
