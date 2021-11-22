@@ -48,6 +48,8 @@ class SynchronizationController {
                   .insert({
                     user_id: newUser[0],
                     event_id: eventUser.event_id,
+                    dateTimeRegistration: eventUser.dateTimeRegistration,
+                    dateTimeEntrance: eventUser.dateTimeEntrance,
                   });
               } else {
                 await Database.connection("online")
@@ -55,6 +57,8 @@ class SynchronizationController {
                   .insert({
                     user_id: eventUser.user_id,
                     event_id: eventUser.event_id,
+                    dateTimeRegistration: eventUser.dateTimeRegistration,
+                    dateTimeEntrance: eventUser.dateTimeEntrance,
                   });
               }
             }
@@ -91,11 +95,15 @@ class SynchronizationController {
                 await EventUser.create({
                   user_id: newUserOnline.id,
                   event_id: eventUserOnline.event_id,
+                  dateTimeRegistration: eventUserOnline.dateTimeRegistration,
+                  dateTimeEntrance: eventUserOnline.dateTimeEntrance,
                 });
               } else {
                 await EventUser.create({
                   user_id: eventUserOnline.user_id,
                   event_id: eventUserOnline.event_id,
+                  dateTimeRegistration: eventUserOnline.dateTimeRegistration,
+                  dateTimeEntrance: eventUserOnline.dateTimeEntrance,
                 });
               }
             }
